@@ -1,13 +1,15 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import ReactDOM from 'react-dom'
+import AppContainer from './container/AppContainer'
 import './styles/index.css'
 
-const AppContainer = () =>{
+const App = () =>{
+
     return(
         <div>
-            Hello There!
+            <AppContainer />
         </div>
     )
 }
 
-ReactDOM.render(<AppContainer />, document.querySelector('#root'))
+ReactDOM.render(<App />, document.querySelector('#root'))
