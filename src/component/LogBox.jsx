@@ -1,33 +1,23 @@
 import React from 'react'
+import { handleLogin, handleLogout } from '../api/AppManage'
 
+const LogBox = props=>{
+    const {mySky, status, setStatus} = props
 
-const LoginBox = props=>{
-    // const reqLogin = async()=>{
-    //     if(!props.mySky){
-    //         const instance = pro
-    //     }
-
-    //     const loggedIn = await props.mySky.requestLoginAccess();
-    //     props.callback(loggedIn);
-    // }
-    const handleLogout = async =>{
-        props.setmySky(null)
-        props.setStatus(false)
-    }
     return(
         <div>
-            {props.status ?
+            {status ?
             (<div><h1>Congrats</h1><br />
-                <button onClick={handleLogout}>Log out</button>    
+                <button onClick={()=>handleLogout({mySky, setStatus})}>Log out</button>    
             </div>)
             :(
                 <div>
                     <h1>Login with MySky</h1>
-                    <button onClick={props.handleLogin}>Login</button>
+                    <button onClick={()=>handleLogin({mySky, setStatus})}>Login</button>
                 </div>
                 )}
         </div>
     )
 }
 
-export default LoginBox
+export default LogBox
