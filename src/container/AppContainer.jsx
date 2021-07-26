@@ -1,7 +1,9 @@
+import { LinearProgress, Paper } from '@material-ui/core';
 import React, {useEffect, useState} from 'react'
 import { initMySky} from "../api/AppManage"
 import LogBox from '../component/LogBox'
 import TodoList from './TodoList';
+
 
 
 const AppContainer = () =>{
@@ -9,7 +11,7 @@ const AppContainer = () =>{
     const [ status, setStatus ] = useState(false);
     const [ list, setList ] = useState([])
     const [ user, setUser] = useState("")
-    const [ loading, setLoading] = useState(false)
+    const [ loading, setLoading ] = useState(false)
    
     
     useEffect(()=>{
@@ -17,7 +19,7 @@ const AppContainer = () =>{
     },[]) 
 
     return(
-        <div>
+        <Paper style={{width: '800px', margin: 'auto', textAlign: 'center', padding: '15px'}}>
             <LogBox 
             status={status} 
             mySky={mySky} 
@@ -27,13 +29,14 @@ const AppContainer = () =>{
             setUser={setUser}
             setList={setList}/>
             <TodoList 
+            loading={loading}
             user={user}
             mySky={mySky}
             status={status} 
             list={list} 
             setList={setList}
             setLoading={setLoading}/>
-        </div>
+        </Paper>
     )
 }
 export default AppContainer

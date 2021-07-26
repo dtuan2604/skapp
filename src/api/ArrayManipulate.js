@@ -5,8 +5,9 @@ export const updateText = (props)=>{
     setListcopy(listcopy)
 }
 export const popWork = (props)=>{
-    const {listcopy, setListcopy} = props
-    let instance = [...listcopy]
-    instance.pop()
+    const {listcopy, list, setListcopy, index} = props
+    let instance = listcopy ? [...listcopy] : [...list]
+    instance.splice(index,1)
     setListcopy(instance)
+    return instance
 }

@@ -60,12 +60,16 @@ export const handleLogout = async(props)=>{
 }
 
 export const setData = async(props) =>{
-    const { user, mySky, listcopy, setLoading } = props
+    const { user, mySky, listcopy, setLoading, setList, setChecked } = props
     
     try{
         setLoading(true)
         console.log("setData is loading.")
-        console.log(await mySky.setJSON(filepath +"/"+ user , listcopy))
+        const { data } = await mySky.setJSON(filepath +"/"+ user , listcopy)
+        if(setList){
+            setList(data)
+            setChecked(false)
+        }
         setLoading(false)
         console.log("setData finish loading.")
     }catch(e){
@@ -89,3 +93,4 @@ export const getData = async(props)=>{
         console.error("Error happens at getData function.")
     }
 }
+

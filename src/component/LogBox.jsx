@@ -8,7 +8,8 @@ const LogBox = props=>{
         <div>
             {status ?
             (<div><h1>Congrats</h1><br />
-                <button onClick={()=>handleLogout({mySky, setStatus, setUser, setList})}>Log out</button>    
+                <button id="logout-button"
+                onClick={()=>handleLogout({mySky, setStatus, setUser, setList})}>Log out</button>    
             </div>)
             :(
                 <div>
