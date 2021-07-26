@@ -1,59 +1,81 @@
 import React, { useState } from 'react'
+import { setData } from '../api/AppManage'
 import Work from '../component/Work'
-var concat = require('lodash.concat');
-const setJson = async(mySky, test)=>{
-    try{
-        console.log(test)
-        const {data} = await mySky.setJSON("localhost", {list:[...test]})
-        console.log(data)
-    }catch(e){
-        console.log(e)
-        console.log("Error at setJson.")
-    }
-}
 
+const updateText = (props)=>{
+    const {listcopy, textIns, setListcopy} = props
+    let instance = [...listcopy]
+    instance[listcopy.length-1].text = textIns
+    setListcopy(listcopy)
+}
+const popWork = (props)=>{
+    const {listcopy, setListcopy} = props
+    let instance = [...listcopy]
+    instance.pop()
+    setListcopy(instance)
+}
 const TodoList = (props)=>{
     const [add, setAdd] = useState(false)
+    
+    //copy the list of work so that the asynchronous function can work easily
+    const [listcopy, setListcopy] = useState(props.list)
+    
     const [text, setText] = useState("")
+    const { user, mySky, list, status, setList, setLoading } = props
     const hanldeAddworkButton = ()=>{
         setAdd(true)
+        setListcopy([...listcopy,{
+            text:"",
+            done: false
+        }])
     }
     const handleText = event =>{
+        const textIns = event.target.value
         setText(event.target.value)
+        updateText({listcopy,textIns,setListcopy})
+
     }
-    const handleSubmitButton = ()=>{
-        var test = concat(props.list,{text})
+    const handleSubmitButton = async()=>{
+        setList(listcopy)
+        setData({user, listcopy, mySky, setLoading})
         setAdd(false)
-        setJson(props.mySky,test)
-        
+        setText("")
+    }
+    const handleCancelbutton = ()=>{
+        setAdd(false)
+        setText("")
+        popWork({listcopy, setListcopy})
     }
     const handle = async()=>{
         try {
+            const filepath = "https://siasky.net/host-app.hns/todolists/" + user 
             // Get discoverable JSON data from the given path.
-            const data = await props.mySky.getJSON("localhost");
+            const data = await mySky.getJSON(filepath)
             console.log(data)
           } catch (error) {
             console.log(error)
           }
     }
     return(
-        <div>{props.status &&
+        <div>
+            {status &&
             (<div>
                 <p>Hello from TodoList?</p>
                 { add ?
                 (<div>
-                    <input type="text" value={text} onChange={handleText}/> 
+                    <input type="text" value={text} onChange={handleText}/>
+                    <button onClick={handleCancelbutton}>Cancel</button> 
                     <button onClick={handleSubmitButton}>Submit</button>
                 </div>)
                 :(<div>
                 <button id="add-work-button" onClick={hanldeAddworkButton}>Add a work</button>
                 <button onClick={handle}>Call Work</button>
                 </div>)}
-                {/* {props.works.map(work=>{
+                {list.map((work,index)=>{
                     return(
-                        <Work text={work} />
+                        <Work key={index} text={work.text} />
                     )
-                })} */}
+                })}
             </div>)
         }
         </div>

@@ -3,9 +3,7 @@ import React from 'react'
 const Work = props =>{
     return(
         <div>
-            <p>
-                {props.text}
-            </p>
+            {props.text}
         </div>
     )
 }

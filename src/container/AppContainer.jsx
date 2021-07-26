@@ -1,19 +1,19 @@
 import React, {useEffect, useState} from 'react'
 import { initMySky} from "../api/AppManage"
-// import { ContentRecordDAC } from '@skynetlabs/content-record-library';
 import LogBox from '../component/LogBox'
-// import TodoList from './TodoList';
+import TodoList from './TodoList';
 
 
 const AppContainer = () =>{
     const [ mySky, setMySky ] = useState();
     const [ status, setStatus ] = useState(false);
-    
-    // const [list,setList] = useState([])
+    const [ list, setList ] = useState([])
+    const [ user, setUser] = useState("")
+    const [ loading, setLoading] = useState(false)
    
     
     useEffect(()=>{
-        initMySky({setMySky, setStatus}) 
+        initMySky({setUser, setMySky, setStatus, setList, setLoading}) 
     },[]) 
 
     return(
@@ -21,9 +21,18 @@ const AppContainer = () =>{
             <LogBox 
             status={status} 
             mySky={mySky} 
+            setLoading={setLoading}
             setStatus={setStatus} 
-            setMySky={setMySky}/>
-            {/* <TodoList status={status} list={list} setList={setList} mySky={mySky}/> */}
+            setMySky={setMySky}
+            setUser={setUser}
+            setList={setList}/>
+            <TodoList 
+            user={user}
+            mySky={mySky}
+            status={status} 
+            list={list} 
+            setList={setList}
+            setLoading={setLoading}/>
         </div>
     )
 }
