@@ -1,4 +1,4 @@
-import { LinearProgress, Paper } from '@material-ui/core';
+import { Paper } from '@material-ui/core';
 import React, {useEffect, useState} from 'react'
 import { initMySky} from "../api/AppManage"
 import LogBox from '../component/LogBox'
@@ -21,6 +21,7 @@ const AppContainer = () =>{
     return(
         <Paper style={{width: '800px', margin: 'auto', textAlign: 'center', padding: '15px'}}>
             <LogBox 
+            loading={loading}
             status={status} 
             mySky={mySky} 
             setLoading={setLoading}

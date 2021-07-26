@@ -4,20 +4,17 @@ import { Paper, Checkbox } from '@material-ui/core'
 
 
 const Work = props =>{
-    const { index, handleDeleteWork } = props
+    const { loading, index, handleDeleteWork } = props
     const [checked, setChecked] = useState(false)
     const handleCheckbox = () =>{
-        if(checked){
-            window.alert("You cannot uncheck the previous job!")
-            return null
-        }
         setChecked(true)
-        handleDeleteWork(index,setChecked)
+        handleDeleteWork(index, setChecked)
     }
 
     return(
         <Paper className="work" style={{width: '500px', textAlign:"left", margin: '10px auto'}}>
              <Checkbox
+                disabled={loading ? true : false}
                 checked={checked}
                 onChange={handleCheckbox}
                 color="primary"

@@ -31,8 +31,7 @@ const TodoList = (props)=>{
         updateText({listcopy,textIns,setListcopy})
     }
     const handleSubmitButton = async()=>{
-        setList(listcopy)
-        setData({user, listcopy, mySky, setLoading})
+        setData({user, listcopy, mySky, setLoading, setList})
         setAdd(false)
         setText("")
     }
@@ -44,13 +43,10 @@ const TodoList = (props)=>{
     }
     const handleDeleteWork = async(index, setChecked) =>{
         const listcopy = await popWork({list, setListcopy, index})
-        setData({user, 
-            listcopy, 
-            mySky, 
-            setLoading, 
-            setList, 
-            setChecked
-        })
+        if(index === listcopy.length)
+            setData({user, listcopy, mySky, setLoading, setList})
+        else
+            setData({user, listcopy, mySky, setLoading, setList, setChecked})
     }
     // const handle = async()=>{
     //     try {
@@ -71,10 +67,13 @@ const TodoList = (props)=>{
                 (<div>
                     <input type="text" value={text} onChange={handleText}/>
                     <button onClick={handleCancelbutton}>Cancel</button> 
-                    <button onClick={handleSubmitButton}>Submit</button>
+                    <button disabled={text === "" ? true : false} 
+                        onClick={handleSubmitButton}>Submit</button>
                 </div>)
                 :(<div>
-                    <button id="add-work-button" onClick={hanldeAddworkButton}>Add a work</button>
+                    <button id="add-work-button" 
+                        disabled={loading ? true : false}
+                        onClick={hanldeAddworkButton}>Add a work</button>
                 </div>)}
                 {loading && 
                 (<div>
@@ -85,6 +84,7 @@ const TodoList = (props)=>{
                         <Work 
                         key={index} 
                         index={index}
+                        loading={loading}
                         text={work.text} 
                         done={work.done}
                         handleDeleteWork={handleDeleteWork} 

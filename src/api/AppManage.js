@@ -66,8 +66,8 @@ export const setData = async(props) =>{
         setLoading(true)
         console.log("setData is loading.")
         const { data } = await mySky.setJSON(filepath +"/"+ user , listcopy)
-        if(setList){
-            setList(data)
+        setList(data)
+        if(setChecked){
             setChecked(false)
         }
         setLoading(false)
