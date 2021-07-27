@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { setData } from '../api/AppManage'
 import Work from '../component/Work'
 import { updateText, popWork } from '../api/ArrayManipulate'
-import { LinearProgress } from '@material-ui/core'
+import { LinearProgress, Paper, Button} from '@material-ui/core'
 
 const TodoList = (props)=>{
     const { 
@@ -48,49 +48,44 @@ const TodoList = (props)=>{
         else
             setData({user, listcopy, mySky, setLoading, setList, setChecked})
     }
-    // const handle = async()=>{
-    //     try {
-    //         const filepath = "https://siasky.net/host-app.hns/todolists/" + user 
-    //         // Get discoverable JSON data from the given path.
-    //         const data = await mySky.getJSON(filepath)
-    //         console.log(data)
-    //       } catch (error) {
-    //         console.log(error)
-    //       }
-    // }
     return(
-        <div>
+        <div id="todolist">
             {status &&
-            (<div>
-                <p>Hello from TodoList?</p>
+            (<Paper>
+                <h1>Welcome to SKAPP - ToDoList</h1>
                 { add ?
-                (<div>
-                    <input type="text" value={text} onChange={handleText}/>
-                    <button onClick={handleCancelbutton}>Cancel</button> 
-                    <button disabled={text === "" ? true : false} 
-                        onClick={handleSubmitButton}>Submit</button>
+                (<div id="add-work-bar">
+                    <input id="input-work" type="text" 
+                    value={text} onChange={handleText}/>
+                    <Button id="cancel-button" variant="outlined" 
+                    onClick={handleCancelbutton}>Cancel</Button> 
+                    <Button id="submit-button" variant="outlined" 
+                    disabled={text === "" ? true : false} 
+                        onClick={handleSubmitButton}>Submit</Button>
                 </div>)
                 :(<div>
-                    <button id="add-work-button" 
+                    <Button variant="outlined" id="add-work-button" 
                         disabled={loading ? true : false}
-                        onClick={hanldeAddworkButton}>Add a work</button>
+                        onClick={hanldeAddworkButton}>Add a work</Button>
                 </div>)}
                 {loading && 
                 (<div>
                     <LinearProgress />
                 </div>)}
-                {list.map((work,index)=>{
-                    return(
-                        <Work 
-                        key={index} 
-                        index={index}
-                        loading={loading}
-                        text={work.text} 
-                        done={work.done}
-                        handleDeleteWork={handleDeleteWork} 
-                        />)
-                })}
-            </div>)}
+                <div>
+                    {list.map((work,index)=>{
+                        return(
+                            <Work 
+                            key={index} 
+                            index={index}
+                            loading={loading}
+                            text={work.text} 
+                            done={work.done}
+                            handleDeleteWork={handleDeleteWork} 
+                            />)
+                    })}
+                </div>
+            </Paper>)}
         </div>
     )
 }

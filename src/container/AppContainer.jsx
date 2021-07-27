@@ -1,4 +1,3 @@
-import { Paper } from '@material-ui/core';
 import React, {useEffect, useState} from 'react'
 import { initMySky} from "../api/AppManage"
 import LogBox from '../component/LogBox'
@@ -19,7 +18,7 @@ const AppContainer = () =>{
     },[]) 
 
     return(
-        <Paper style={{width: '800px', margin: 'auto', textAlign: 'center', padding: '15px'}}>
+        <div id="app-container">
             <LogBox 
             loading={loading}
             status={status} 
@@ -37,7 +36,7 @@ const AppContainer = () =>{
             list={list} 
             setList={setList}
             setLoading={setLoading}/>
-        </Paper>
+        </div>
     )
 }
 export default AppContainer
