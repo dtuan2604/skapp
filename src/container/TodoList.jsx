@@ -43,10 +43,16 @@ const TodoList = (props)=>{
     }
     const handleDeleteWork = async(index, setChecked) =>{
         const listcopy = await popWork({list, setListcopy, index})
+        //The DOM structure marks element by index. Therefore, 
+        //sometimes, when the ath element is marked to be delete.
+        //After loading, the (a+1)th element, which now become ath element,
+        // is automatically marked. To prevent this case, setChecked is passed 
+        //to set the (a+1)th element back to its normal state. 
         if(index === listcopy.length)
             setData({user, listcopy, mySky, setLoading, setList})
         else
             setData({user, listcopy, mySky, setLoading, setList, setChecked})
+            
     }
     return(
         <div id="todolist">
@@ -56,11 +62,12 @@ const TodoList = (props)=>{
                 { add ?
                 (<div id="add-work-bar">
                     <input id="input-work" type="text" 
+                    disabled={loading ? true : false}
                     value={text} onChange={handleText}/>
                     <Button id="cancel-button" variant="outlined" 
                     onClick={handleCancelbutton}>Cancel</Button> 
                     <Button id="submit-button" variant="outlined" 
-                    disabled={text === "" ? true : false} 
+                    disabled={text === "" || loading ? true : false} 
                         onClick={handleSubmitButton}>Submit</Button>
                 </div>)
                 :(<div>
